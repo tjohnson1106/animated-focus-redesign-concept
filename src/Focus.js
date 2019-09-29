@@ -1,10 +1,29 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import Animated from "react-native-reanimated";
+import { TapGestureHandler, State } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("window");
 
+const { Value, event, block, cond, eq, set } = Animated;
+
 class Focus extends Component {
-  state = {};
+  constructor() {
+    super();
+
+    this.buttonOpacity = new Value(1);
+
+    this.onStateChange = event([
+      {
+        nativeEvent: ({ state }) =>
+          block([
+            //   does state === STATE.END
+            //   state changes upon release of button for animation to run
+            cond(eq(state, State.END), set(this.buttonOpacity, 0))
+          ])
+      }
+    ]);
+  }
   render() {
     return (
       <View style={styles.root}>
@@ -20,9 +39,11 @@ class Focus extends Component {
         </View>
         {/* email sign in/up */}
         <View style={styles.buttonWrapper}>
-          <View style={styles.button}>
-            <Text>SIGN IN</Text>
-          </View>
+          <TapGestureHandler onHandlerStateChange={this.onStateChange}>
+            <Animated.View style={{ ...styles.button, opacity: this.buttonOpacity }}>
+              <Text>SIGN IN</Text>
+            </Animated.View>
+          </TapGestureHandler>
           <View style={{ ...styles.button, backgroundColor: "#2E71DC" }}>
             <Text>SIGN IN WITH FACEBOOK</Text>
           </View>
@@ -41,7 +62,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   buttonWrapper: {
-    height: height / 3
+    height: height / 3,
+    justifyContent: "center"
   },
   button: {
     backgroundColor: "#fff",
