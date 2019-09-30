@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, TextInput } from "react-native";
 
 import Animated, { Easing } from "react-native-reanimated";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
@@ -124,6 +124,36 @@ class Focus extends Component {
               SIGN IN WITH FACEBOOK
             </Text>
           </Animated.View>
+          <Animated.View
+            style={{
+              height: height / 3,
+              ...StyleSheet.absoluteFill,
+              top: null,
+              justifyContent: "center"
+            }}
+          >
+            <TextInput
+              placeholder="EMAIL"
+              style={styles._textInput}
+              placeholderTextColor="black"
+            />
+
+            <TextInput
+              placeholder="PASSWORD"
+              style={styles._textInput}
+              placeholderTextColor="black"
+            />
+            <Animated.View style={styles.button}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold"
+                }}
+              >
+                SIGN IN
+              </Text>
+            </Animated.View>
+          </Animated.View>
         </View>
       </View>
     );
@@ -140,6 +170,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 5
+  },
+  _textInput: {
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 0.5,
+    marginHorizontal: 20,
+    paddingLeft: 10,
+    marginVertical: 5,
+    borderColor: "rgba(0, 0, 0, 0.2)"
   }
 });
 
