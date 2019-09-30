@@ -79,6 +79,23 @@ class Focus extends Component {
       outputRange: [-height / 3, 0],
       extrapolate: Extrapolate.CLAMP
     });
+
+    this.textInputZindex = interpolate(this.buttonOpacity, {
+      inputRange: [0, 1],
+      outputRange: [1, -1],
+      extrapolate: Extrapolate.CLAMP
+    });
+
+    this.textInputY = interpolate(this.buttonOpacity, {
+      inputRange: [0, 1],
+      outputRange: [0, 100],
+      extrapolate: Extrapolate.CLAMP
+    });
+    this.textInputOpacity = interpolate(this.buttonOpacity, {
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+      extrapolate: Extrapolate.CLAMP
+    });
   }
   render() {
     return (
@@ -126,6 +143,9 @@ class Focus extends Component {
           </Animated.View>
           <Animated.View
             style={{
+              zIndex: this.textInputZindex,
+              opacity: this.textInputOpacity,
+              transform: [{ translateY: this.textInputY }],
               height: height / 3,
               ...StyleSheet.absoluteFill,
               top: null,
